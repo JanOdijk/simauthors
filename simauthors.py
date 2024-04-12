@@ -1,6 +1,7 @@
 from optparse import OptionParser
 import os
 from typing import List
+import itertools
 import csv
 from collections import defaultdict
 from xlsx import getxlsxdata, mkworkbook
@@ -147,47 +148,43 @@ def simauthors():
     for author in mainarray:
        for parblock in mainarray[author]:
            if len(mainarray[author][parblock]) > 1:
-               doneset = set()
-               for pid1 in mainarray[author][parblock]:
-                   for pid2 in mainarray[author][parblock]:
-                       if pid1 != pid2 & pid2 not in doneset:
-                            pid1dict = mainarray[author][parblock][pid1]
-                            pid2dict = mainarray[author][parblock][pid2]
-                            authorlist1 = pid1dict[cleanauthorslabel]
-                            outof1: int = len(authorlist1)
-                            author1n: int = getauthorn(author, authorlist1)
-                            rawauthorlist1 = pid1dict[presentingauthorslabel]
-                            rawauthor1 = getauthor(author1n, rawauthorlist1)
-                            authorlist2  = pid2dict[cleanauthorslabel]
-                            outof2: int = len(authorlist2)
-                            author2n: int = getauthorn(author, authorlist2)
-                            rawauthorlist2 = pid2dict[presentingauthorslabel]
-                            rawauthor2 = getauthor(author2n, rawauthorlist2)
-                            session1 = pid1dict[sessionlabel]
-                            session2 = pid2dict[sessionlabel]
+               for pid1, pid2 in itertools.combinations(mainarray[author][parblock], 2):
+                   if pid1 != pid2:
+                        pid1dict = mainarray[author][parblock][pid1]
+                        pid2dict = mainarray[author][parblock][pid2]
+                        authorlist1 = pid1dict[cleanauthorslabel]
+                        outof1: int = len(authorlist1)
+                        author1n: int = getauthorn(author, authorlist1)
+                        rawauthorlist1 = pid1dict[presentingauthorslabel]
+                        rawauthor1 = getauthor(author1n, rawauthorlist1)
+                        authorlist2  = pid2dict[cleanauthorslabel]
+                        outof2: int = len(authorlist2)
+                        author2n: int = getauthorn(author, authorlist2)
+                        rawauthorlist2 = pid2dict[presentingauthorslabel]
+                        rawauthor2 = getauthor(author2n, rawauthorlist2)
+                        session1 = pid1dict[sessionlabel]
+                        session2 = pid2dict[sessionlabel]
 
-                            thecomid = mkcomid(author,pid1, session1, pid2, session2)
-                            comment1 = comments[thecomid][commentstr1] if thecomid in comments else ''
-                            comment2 = comments[thecomid][commentstr2] if thecomid in comments else ''
-                            newrow = [comment1, comment2, rawauthor1, rawauthor2]
+                        thecomid = mkcomid(author,pid1, session1, pid2, session2)
+                        comment1 = comments[thecomid][commentstr1] if thecomid in comments else ''
+                        comment2 = comments[thecomid][commentstr2] if thecomid in comments else ''
+                        newrow = [comment1, comment2, rawauthor1, rawauthor2]
 
-                            if session1 != session2:
-                                severity = 'Warning'
-                                message = 'has multiple papers in different sessions in parblock'
-                            else:
-                                severity = 'Message'
-                                message = 'has multiple papers in the same session in parblock'
+                        if session1 != session2:
+                            severity = 'Warning'
+                            message = 'has multiple papers in different sessions in parblock'
+                        else:
+                            severity = 'Message'
+                            message = 'has multiple papers in the same session in parblock'
 
-                            rawauthors1 = comma.join(mainarray[author][parblock][pid1][rawauthorslabel])
-                            rawauthors2 = comma.join(mainarray[author][parblock][pid2][rawauthorslabel])
-                            presentingauthors1 = comma.join(mainarray[author][parblock][pid1][presentingauthorslabel])
-                            presentingauthors2 = comma.join(mainarray[author][parblock][pid2][presentingauthorslabel])
-                            newrow += [severity, author, message, parblock,pid1, session1, pid2, session2]
-                            newrow += [author1n, outof1, presentingauthors1, author2n, outof2, presentingauthors2,
-                                       rawauthors1, rawauthors2]
-                            outdata.append(newrow)
-
-               doneset.add(pid1)
+                        rawauthors1 = comma.join(mainarray[author][parblock][pid1][rawauthorslabel])
+                        rawauthors2 = comma.join(mainarray[author][parblock][pid2][rawauthorslabel])
+                        presentingauthors1 = comma.join(mainarray[author][parblock][pid1][presentingauthorslabel])
+                        presentingauthors2 = comma.join(mainarray[author][parblock][pid2][presentingauthorslabel])
+                        newrow += [severity, author, message, parblock,pid1, session1, pid2, session2]
+                        newrow += [author1n, outof1, presentingauthors1, author2n, outof2, presentingauthors2,
+                                   rawauthors1, rawauthors2]
+                        outdata.append(newrow)
 
     # write the outheader and outdata to  an Excel output file
 

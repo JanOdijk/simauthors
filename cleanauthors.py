@@ -45,18 +45,29 @@ def authors2list(authorstring: str) -> List[str]:
     strippedauthorlist = [name.strip() for name in authorlist]
     return strippedauthorlist
 
-def cleanauthors(rawauthorstring: str) -> List[str]:
+def cleanauthors(rawauthorstring: str, includerestnames=False) -> List[str]:
     rawauthorlist = authors2list(rawauthorstring)
     cleanfamilynames = []
     for name in rawauthorlist:
         nameparts = name.split(space)
         familyname = nameparts[-1]
-        if familyname in exceptions:
-            familyname = exceptions[familyname]
-        familyname = deaccent(familyname)
-        familyname = familyname.lower()
-        cleanfamilynames.append(familyname)
+        familyname = cleanname(familyname)
+        if includerestnames:
+            restnamelist = nameparts[:-1]
+            newrestnamelist = [cleanname(restname) for restname in restnamelist]
+            cleanfamilynames.append((familyname, newrestnamelist))
+        else:
+            cleanfamilynames.append(familyname)
     return cleanfamilynames
+
+
+
+def cleanname(name: str) -> str:
+    if name in exceptions:
+        name = exceptions[name]
+    name = deaccent(name)
+    name = name.lower()
+    return name
 
 
 def deaccent(name: str) -> str:
