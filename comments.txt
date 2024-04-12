@@ -18,3 +18,9 @@ Ghoneim-1172-X40-638-Z10	no_problem	3rd+ author
 Ghoneim-638-Z10-1172-X40	no_problem	3rd+ author
 Diab-1172-X40-638-Z10	no_problem	3rd+ author
 Diab-638-Z10-1172-X40	no_problem	3rd+ author
+Wang-450-X25-790-X26	no problem	different first name
+Wang-790-X26-450-X25	no problem	different first name
+Carvalho-652-X13-401-Z04	no problem	different first name
+Carvalho-401-Z04-652-X13	no problem	different first name
+Liu-759-X37-1227-Z10	no problem	different first name
+Liu-1227-Z10-759-X37	no problem	different first name

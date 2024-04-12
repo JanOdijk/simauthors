@@ -4,7 +4,7 @@
 newdata_authorcol = 0
 newdata_rawauthorscol = 1
 newdata_parblockcol = 2
-newdata_sessioncol = 3
+newdata_sessionslotcol = 3
 newdata_paperidcol = 4
 newdata_cleanauthorscol = 5
 

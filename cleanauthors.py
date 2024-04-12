@@ -54,6 +54,7 @@ def cleanauthors(rawauthorstring: str) -> List[str]:
         if familyname in exceptions:
             familyname = exceptions[familyname]
         familyname = deaccent(familyname)
+        familyname = familyname.lower()
         cleanfamilynames.append(familyname)
     return cleanfamilynames
 

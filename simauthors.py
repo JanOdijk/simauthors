@@ -5,11 +5,11 @@ import csv
 from collections import defaultdict
 from xlsx import getxlsxdata, mkworkbook
 from cleanauthors import authors2list, cleanauthors
-from parameters import authorscol,  parblockcol, sessioncol, paperidcol
+from parameters import authorscol,  parblockcol, sessionslotcol, paperidcol
 from constants import getcol as gc, \
     comment1_l, comment2_l, rawauthor1_l, rawauthor2_l, severity_l,  author_l, message_l,  parblock_l, \
     pid1_l, session1_l,  pid2_l, session2_l, nth_author1_l, out_of1_l, rawauthors1_l, nth_author2_l, out_of2_l, \
-    rawauthors2_l, newdata_authorcol, newdata_rawauthorscol, newdata_parblockcol, newdata_sessioncol, \
+    rawauthors2_l, newdata_authorcol, newdata_rawauthorscol, newdata_parblockcol, newdata_sessionslotcol, \
     newdata_paperidcol, newdata_cleanauthorscol, outheader
 
 tab = '\t'
@@ -30,11 +30,11 @@ def getcleanauthors(rawauthors: str) -> list:
     pass
 
 def getauthorn(name: str, namelist: List[str]):
-    result = namelist.index(name)
+    result = namelist.index(name) + 1
     return result
 
 def getauthor(i: int, namelist):
-    result = namelist[i]
+    result = namelist[i-1]
     return result
 
 def mkcomid(author, pid1, session1, pid2, session2):
@@ -113,7 +113,7 @@ def simauthors():
     for row in data:
         rawauthors = row[authorscol]
         parblock = row[parblockcol]
-        session = row[sessioncol]
+        session = row[sessionslotcol]
         paperid = row[paperidcol]
         authorlist = cleanauthors(rawauthors)
         for author in authorlist:
@@ -126,7 +126,7 @@ def simauthors():
     for row in newdata:
         mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][rawauthorslabel] = authors2list(row[newdata_rawauthorscol])
         mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][cleanauthorslabel] = row[newdata_cleanauthorscol]
-        mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][sessionlabel] = row[newdata_sessioncol]
+        mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][sessionlabel] = row[newdata_sessionslotcol]
 
     outdata = []
     for author in mainarray:
