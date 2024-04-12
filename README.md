@@ -7,7 +7,7 @@ The software can only detect potential conflicts, it can**NOT** resolve them, an
 
 > We use the term *program* for a piece of software and the term *programme* for a conference programme
 
-This program is neede because proper names are natural language objects and thus show many of the problems when one tries to use natural language for effective communication(for which it is, mildly put, not optimal). In particular, a major problem is that a lot of variation is allowed. This program would be alot simpler and perhaps even unnecessary if author iodentifiers were in use. See section [*Author identifiers*](#author-identifiers)
+This program is needed because proper names are natural language objects and thus show many of the problems when one tries to use natural language for effective communication (for which it is, mildly put, not optimal). In particular, a major problem is that a lot of variation is allowed. This program would be a lot simpler and perhaps even unnecessary if author identifiers were in use. See section [*Author identifiers*](#author-identifiers)
 
 
 # Global Procedure
