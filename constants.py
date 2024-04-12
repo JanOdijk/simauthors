@@ -7,6 +7,7 @@ newdata_parblockcol = 2
 newdata_sessionslotcol = 3
 newdata_paperidcol = 4
 newdata_cleanauthorscol = 5
+newdata_presentingauthorscol = 6
 
 # columns in the (commented) output files
 
@@ -28,11 +29,13 @@ rawauthors1_l = "Raw Authors1"
 nth_author2_l = "Nth Author2"
 out_of2_l = "Out of2"
 rawauthors2_l = "Raw Authors2"
+presentingauthors1_l = "Presenting authors1"
+presentingauthors2_l = "Presenting authors2"
 
 
 outheader = [ comment1_l, comment2_l, rawauthor1_l, rawauthor2_l,severity_l,  author_l, message_l,  parblock_l,
-           pid1_l, session1_l,  pid2_l, session2_l, nth_author1_l, out_of1_l, rawauthors1_l, nth_author2_l, out_of2_l,
-              rawauthors2_l]
+           pid1_l, session1_l,  pid2_l, session2_l, nth_author1_l, out_of1_l, presentingauthors1_l , nth_author2_l, out_of2_l,
+              presentingauthors2_l, rawauthors1_l,rawauthors2_l]
 
 def getcol(label: str) -> int:
     result = outheader.index(label)

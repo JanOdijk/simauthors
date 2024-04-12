@@ -5,20 +5,22 @@ import csv
 from collections import defaultdict
 from xlsx import getxlsxdata, mkworkbook
 from cleanauthors import authors2list, cleanauthors
-from parameters import authorscol,  parblockcol, sessionslotcol, paperidcol
+from parameters import authorscol,  parblockcol, sessionslotcol, paperidcol, presenterscol
 from constants import getcol as gc, \
     comment1_l, comment2_l, rawauthor1_l, rawauthor2_l, severity_l,  author_l, message_l,  parblock_l, \
     pid1_l, session1_l,  pid2_l, session2_l, nth_author1_l, out_of1_l, rawauthors1_l, nth_author2_l, out_of2_l, \
     rawauthors2_l, newdata_authorcol, newdata_rawauthorscol, newdata_parblockcol, newdata_sessionslotcol, \
-    newdata_paperidcol, newdata_cleanauthorscol, outheader
+    newdata_paperidcol, newdata_cleanauthorscol, newdata_presentingauthorscol, outheader
 
 tab = '\t'
 comma = ','
+semicolon = ';'
 commentstr1 = "comments1"
 commentstr2 = "comments2"
 rawauthorslabel = 'rawauthors'
 cleanauthorslabel = 'cleanauthors'
 sessionlabel = 'session'
+presentingauthorslabel = 'presentingauthors'
 
 def nested_dict(n, type):
     if n == 1:
@@ -75,6 +77,15 @@ def storecomments(comments, commentsfilename) -> None:
             row = [comid, comments[comid][commentstr1], comments[comid][commentstr2]]
             commentswriter.writerow(row)
 
+def getpresentingauthors(rawauthors: str, presenters: str) -> str:
+    rawpresenterlist = presenters.split(semicolon) if presenters != '' else []
+    presenterlist = [int(pres.strip()) for pres in rawpresenterlist]
+    newrawauthors = rawauthors.replace(' and ', comma)
+    rawauthorlist = newrawauthors.split(comma)
+    presentingauthorlist = [rawauthorlist[i-1] for i in presenterlist]
+    presentingauthorlist += [rawauthor for i, rawauthor in enumerate(rawauthorlist) if i+1 not in presenterlist]
+    presentingauthors = comma.join(presentingauthorlist)
+    return presentingauthors
 
 def simauthors():
     parser = OptionParser()
@@ -115,9 +126,11 @@ def simauthors():
         parblock = row[parblockcol]
         session = row[sessionslotcol]
         paperid = row[paperidcol]
-        authorlist = cleanauthors(rawauthors)
+        presenters = str(row[presenterscol]) if presenterscol != -1 else ''
+        rawpresentingauthors = getpresentingauthors(rawauthors, presenters)
+        authorlist = cleanauthors(rawpresentingauthors)
         for author in authorlist:
-            newrow = [author, rawauthors, parblock, session, paperid, authorlist]
+            newrow = [author, rawauthors, parblock, session, paperid,  authorlist, rawpresentingauthors,]
             newdata.append(newrow)
 
 
@@ -127,6 +140,8 @@ def simauthors():
         mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][rawauthorslabel] = authors2list(row[newdata_rawauthorscol])
         mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][cleanauthorslabel] = row[newdata_cleanauthorscol]
         mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][sessionlabel] = row[newdata_sessionslotcol]
+        mainarray[row[newdata_authorcol]][row[newdata_parblockcol]][row[newdata_paperidcol]][presentingauthorslabel] \
+            = authors2list(row[newdata_presentingauthorscol])
 
     outdata = []
     for author in mainarray:
@@ -141,12 +156,12 @@ def simauthors():
                             authorlist1 = pid1dict[cleanauthorslabel]
                             outof1: int = len(authorlist1)
                             author1n: int = getauthorn(author, authorlist1)
-                            rawauthorlist1 = pid1dict[rawauthorslabel]
+                            rawauthorlist1 = pid1dict[presentingauthorslabel]
                             rawauthor1 = getauthor(author1n, rawauthorlist1)
                             authorlist2  = pid2dict[cleanauthorslabel]
                             outof2: int = len(authorlist2)
                             author2n: int = getauthorn(author, authorlist2)
-                            rawauthorlist2 = pid2dict[rawauthorslabel]
+                            rawauthorlist2 = pid2dict[presentingauthorslabel]
                             rawauthor2 = getauthor(author2n, rawauthorlist2)
                             session1 = pid1dict[sessionlabel]
                             session2 = pid2dict[sessionlabel]
@@ -165,13 +180,16 @@ def simauthors():
 
                             rawauthors1 = comma.join(mainarray[author][parblock][pid1][rawauthorslabel])
                             rawauthors2 = comma.join(mainarray[author][parblock][pid2][rawauthorslabel])
+                            presentingauthors1 = comma.join(mainarray[author][parblock][pid1][presentingauthorslabel])
+                            presentingauthors2 = comma.join(mainarray[author][parblock][pid2][presentingauthorslabel])
                             newrow += [severity, author, message, parblock,pid1, session1, pid2, session2]
-                            newrow += [author1n, outof1, rawauthors1, author2n, outof2, rawauthors2]
+                            newrow += [author1n, outof1, presentingauthors1, author2n, outof2, presentingauthors2,
+                                       rawauthors1, rawauthors2]
                             outdata.append(newrow)
 
                doneset.add(pid1)
 
-    # write the outheader and outdata to  an excel output file
+    # write the outheader and outdata to  an Excel output file
 
     wb = mkworkbook(options.outfullname, [outheader], outdata, freeze_panes=(1,0))
     wb.close()

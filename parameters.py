@@ -5,6 +5,6 @@
 paperidcol = 0
 parblockcol = 2
 authorscol = 3
-sessionslotcol = 16
+sessionslotcol = 17
+presenterscol = 4
 
-# maybe add presenters column

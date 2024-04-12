@@ -1,13 +1,42 @@
+radev-311-X31-617-Z08	no_problem	3rd+ author
+radev-617-Z08-311-X31	no_problem	3rd+ author
+Wanner-812-X22-1110-Z06	no_problem	3rd+ author
+wanner-1110-Z06-812-X22	no_problem	3rd+ author
+steinberger-428-X07-1182-Z02	no_problem	3rd+ author
+steinberger-1182-Z02-428-X07	no_problem	3rd+ author
+rodrigues-1150-X05-179-Z02	no_problem	3rd+ author
+rodrigues-179-Z02-1150-X05	no_problem	3rd+ author
+calvo-939-X17-413-Z05	no_problem	3rd+ author
+calvo-413-Z05-939-X17	no_problem	3rd+ author
+candito-1011-X40-403-Z10	no_problem	3rd+ author
+candito-403-Z10-1011-X40	no_problem	3rd+ author
+olsen-1150-X05-306-Z02	no_problem	3rd+ author
+olsen-306-Z02-1150-X05	no_problem	3rd+ author
+ghoneim-1172-X40-638-Z10	no_problem	3rd+ author
+ghoneim-638-Z10-1172-X40	no_problem	3rd+ author
+diab-1172-X40-638-Z10	no_problem	3rd+ author
+diab-638-Z10-1172-X40	no_problem	3rd+ author
+wang-450-X25-790-X26	no problem	different first name
+wang-790-X26-450-X25	no problem	different first name
+carvalho-652-X13-401-Z04	no problem	different first name
+carvalho-401-Z04-652-X13	no problem	different first name
+liu-759-X37-1227-Z10	no problem	different first name
+liu-1227-Z10-759-X37	no problem	different first name
 Radev-311-X31-617-Z08	no_problem	3rd+ author
 Radev-617-Z08-311-X31	no_problem	3rd+ author
-Wanner-812-X22-1110-Z06	no_problem	3rd+ author
 Wanner-1110-Z06-812-X22	no_problem	3rd+ author
 Steinberger-428-X07-1182-Z02	no_problem	3rd+ author
 Steinberger-1182-Z02-428-X07	no_problem	3rd+ author
+Wang-450-X25-790-X26	no problem	different first name
+Wang-790-X26-450-X25	no problem	different first name
 Zweigenbaum-514-X21-1048-Z06	no_problem	3rd+ author
 Zweigenbaum-1048-Z06-514-X21	no_problem	3rd+ author
 Rodrigues-1150-X05-179-Z02	no_problem	3rd+ author
 Rodrigues-179-Z02-1150-X05	no_problem	3rd+ author
+Carvalho-652-X13-401-Z04	no problem	different first name
+Carvalho-401-Z04-652-X13	no problem	different first name
+Liu-759-X37-1227-Z10	no problem	different first name
+Liu-1227-Z10-759-X37	no problem	different first name
 Calvo-939-X17-413-Z05	no_problem	3rd+ author
 Calvo-413-Z05-939-X17	no_problem	3rd+ author
 Candito-1011-X40-403-Z10	no_problem	3rd+ author
@@ -18,9 +47,3 @@ Ghoneim-1172-X40-638-Z10	no_problem	3rd+ author
 Ghoneim-638-Z10-1172-X40	no_problem	3rd+ author
 Diab-1172-X40-638-Z10	no_problem	3rd+ author
 Diab-638-Z10-1172-X40	no_problem	3rd+ author
-Wang-450-X25-790-X26	no problem	different first name
-Wang-790-X26-450-X25	no problem	different first name
-Carvalho-652-X13-401-Z04	no problem	different first name
-Carvalho-401-Z04-652-X13	no problem	different first name
-Liu-759-X37-1227-Z10	no problem	different first name
-Liu-1227-Z10-759-X37	no problem	different first name

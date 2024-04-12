@@ -3,19 +3,23 @@ Software to find potential conflicts for authors when presenting papers or poste
 
 Note that it can only suggest plausible conflicts but it cannot guarantee that all conflicts will be detected.
 
-The software can only detect potential conflicts, it cannot resolve them, and it cannot create a program wiithout (or with the least number of) conflicts.
+The software can only detect potential conflicts, it cannot resolve them, and it cannot create a conference programme without (or with the least number of) conflicts.
 
-The program must be adapted by the conference program committee iteratively, rechecked by the *simauthors* program, until no conlicts are deteercted or only acceptable conflicts remain. There is no guarantee that there is a solution without conflicts.
+The conference programme must be adapted by the conference programme committee iteratively, rechecked by the *simauthors* program, until no conflicts are detected or only acceptable conflicts remain. There is no guarantee that there is a solution without conflicts.
 
 # Global Procedure
 
 The procedure that the *simauthors* software supports is as follows:
-1. The programme committee makes a program. It stores it in a file as described in the section *Presuppositions*
+1. The programme committee makes a conference programme. It stores it in a file as described in the section *Presuppositions*
 2. The *simauthors* program is run to detect potential author conflicts
-3. The program committee annotates the output of the *simauthors* program and identifies the real conflicts. If no conflcts are found anymore, the procedure stops. 
+3. The programme committee annotates the output of the *simauthors* program and identifies the real conflicts. If no conflicts are found anymore, the procedure stops. 
 4. It revises the program to avoid the identified conflicts. and repeats the procedure from item *2* 
 
-Note that there is no guarantee that all conflicts can be resolved and thus no guarantee that this procedure stops. In cases where not all conflicts can be resolved, the programme committee has to make a decision to finalise the conference programme. 
+Note that there is no guarantee that all conflicts can be resolved and thus no guarantee that this procedure stops. 
+
+In most cases one can only take into account conflicts with the first or second author of a paper. In some cases the authors have indicated that the presenter will be a specific author. One can specify this in the conference programme file. (See the [*Presenters*](#presenters) section).
+
+In cases where not all conflicts can be resolved, the programme committee has to make a decision to finalise the conference programme. 
 
 # Presuppositions
 
@@ -33,11 +37,24 @@ The programme committee must create an Excel workbook in which it defines the pr
 * parblock: the id of the parallel block that the session slot *sessionslotid* belongs to
 * *authors*: the authors of the submission. This is a string that contains the author names separated from each other by comma or *" and "* 
 
+
 One can specify the (zero-based!) column numbers of these columns in the file parameters.py. The header labels of these columns can have any value.
 
 Any number of other columns can be present in the file. 
 
 Such a file can be created by export from the START conference management system by adding columns for *sessionslotid* and *parblock* (*paperid* and *authors* are present in such files.
+
+## Presenters
+
+*Warning*: this is a new feature of the 2024 version, and has not been tested yet extensively
+
+The input file may also have an additional colum:
+
+* *Presenters*: here one can list the author index(es) of the presenter(s) of the paper. If there are multiple, they must be separated by *semicolon*. 
+
+This is useful if the authors have specified who is/are going to present the paper (especially if they are not the first or second author of the paper).
+
+The computation of potential conflicts is then done on the basis of a presenting authors list, which contains the presenters, followed by the other authors in the original order.
 
 # Dependencies
 
@@ -84,9 +101,11 @@ The program generates an output file that is called *authoranalysis.xlsx* (other
 * *Session2*: the session id of the paper with id *PID2*
 * *Nth Author1*: the index of the author in the list of authors for *PID1* (e.g. first author, second author, ... eight author, etc.). This is interesting information because a conflict between two authors who are e.g. 7th and 8th author is not very problematic. In the past we tried to avoid conflicts only for the first and the second author.
 * *Out of1*: the number of authors of paper *PID1* 
-* *Raw Authors1*: the original string with authors for paper *PID1* 
+* *Presenting Authors1* a string with the comma-separated  authors of *PID1* in *presentation order*
 * *Nth Author2*: the index of the author in the list of authors for *PID2* 
 * *Out of2*: the number of authors of paper *PID1* 
+* *Presenting authors2* a string with the comma-separated  authors of *PID1* in *presentation order*
+* *Raw Authors1*: the original string with authors for paper *PID1* 
 * *Raw Authors2*: the original string with authors for paper *PID2* 
 
 One can inspect this file to identify real conflicts. The MS Excel sheet has AutoFilter on, so one can easily select e.g. only the warnings.  
@@ -110,7 +129,7 @@ In many cases one only has to annotate those entries that are not actually a con
 
 Making such annotations allows one to easily select the potential conflicts that really are conflicts.
 
-The programme committee must now come up with  different program that avoids the conflicts observed, and then run the *simauthors* program. (See the section *Global rocedure*. If any of the potential conflicts that have already been annotated reappears the annotations made will reappear as well, so that these do not have to be looked into again.   
+The programme committee must now come up with  different conference programm that avoids the conflicts observed, and then run the *simauthors* program again. (See the section [*Global procedure*](#global-procedure). If any of the potential conflicts that have already been annotated reappears the annotations made will reappear as well, so that these do not have to be looked into again.   
 
 The annotations are stored in a file called *comments.txt*. Remove it when you start a programme for a new conference. 
 
@@ -119,18 +138,18 @@ The annotations are stored in a file called *comments.txt*. Remove it when you s
 Names are compared as follows:
 * First the family name is identified. This is usually the last token in the full name
 * The family name is normalized
-  * diacritics are removed from charactersby removing the non spacing martks after  normalisation to  the Unicode NFD norm 
-  * certain non-ascii characters are replaced by common  variants consiting of multiple ASCII symbols (e.g. *ä* is replaced by *ae*)
+  * diacritics are removed from characters by removing the non spacing martks after  normalisation to  the Unicode NFD norm 
+  * certain non-ascii characters are replaced by common  variants consisting of multiple ASCII symbols (e.g. *ä* is replaced by *ae*)
 
+The first and middke names are ignored because taking them into account will lead to missing potential conflicts. 
 
 ## Exceptions
 
-Name variants that cannot be dealt with by the procedure described above can be added to the exceptions file *exceptions.txt* with their substitutions. This is a tab-separated value file without a header.
+Name variants that cannot be dealt with by the procedure described above can be added to the exception file *exceptions.txt* with their substitutions. This is a tab-separated value file without a header.
 
 
 # Desired Extensions
 
-* specification of presenters
 * score to indicate plausibility of realness of the potential conflict
 * procedure to find likely mis-spellings or spelling variations in the author names
 * proper dealing with name suffixes such as I, II, III, junior, senior
