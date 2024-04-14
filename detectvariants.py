@@ -126,10 +126,10 @@ def detectvariants():
             print(f'{nametuple1} v. {nametuple2}', file=outfile)
         print(f'\n================\nMost likely a variant of:', file=outfile)
         for nametuple1, nametuple2, famnamefrq1, famnamefrq2 in sorted(variantsof):
-            print(f'{nametuple1} v. {nametuple2} ({famname1frq} v. {famname2frq})', file=outfile)
+            print(f'{nametuple1} v. {nametuple2} ({famnamefrq1} v. {famnamefrq2})', file=outfile)
         print(f'\n================\nMost likely  variants of each other:', file=outfile)
         for nametuple1, nametuple2, famnamefrq1, famnamefrq2 in sorted(variants):
-            print(f'{nametuple1} v. {nametuple2} ({famname1frq} == {famname2frq})', file=outfile)
+            print(f'{nametuple1} v. {nametuple2} ({famnamefrq1} == {famnamefrq2})', file=outfile)
 
 
 def getrestnamescore(restname1: List[str], restname2: List[str]) -> float:

@@ -235,8 +235,8 @@ Most likely variants (same normalized family name):
 
 ================
 Most likely a variant of:
-('bhattacharya', ('pushpak',)) v. ('bhattacharyya', ('pushpak',)) (4 v. 2)
+('bhattacharya', ('pushpak',)) v. ('bhattacharyya', ('pushpak',)) (2 v. 4)
 
 ================
 Most likely  variants of each other:
-('mititelu', ('verginica', 'barbu')) v. ('mitetelu', ('verginica',)) (4 == 2)
+('mititelu', ('verginica', 'barbu')) v. ('mitetelu', ('verginica',)) (1 == 1)
