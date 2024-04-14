@@ -46,7 +46,6 @@ Most likely different authors:
 ('choi', ('ho-jin',)) v. ('choi', ('eunsol',))
 ('choi', ('key-sun',)) v. ('choi', ('eunsol',))
 ('choi', ('key-sun',)) v. ('choi', ('ho-jin',))
-('clergerie', ('eric', 'villemonte', 'de', 'la')) v. ('clergerie', ('eric', 'de', 'la'))
 ('costa', ('luis', 'morgado', 'da')) v. ('costa', ('angela',))
 ('dick', ('michelle',)) v. ('dick', ('melanie',))
 ('ecker', ('stefan',)) v. ('ecker', ('brian',))
@@ -121,7 +120,6 @@ Most likely different authors:
 ('martin', ('james', 'h.')) v. ('martin', ('fabienne',))
 ('martinez', ('marta',)) v. ('martinez', ('jose', 'manuel', 'martinez'))
 ('matos', ('miguel',)) v. ('matos', ('david', 'martins', 'de'))
-('mccrae', ('john', 'philip')) v. ('mccrae', ('john',))
 ('melo', ('luis', 'felipe')) v. ('melo', ('gerard', 'de'))
 ('mendes', ('pablo',)) v. ('mendes', ('amalia',))
 ('mirzaei', ('azadeh',)) v. ('mirzaei', ('mehrdad',))
@@ -143,21 +141,18 @@ Most likely different authors:
 ('perez', ('naiara',)) v. ('perez', ('walter',))
 ('popescu', ('octavian',)) v. ('popescu', ('vladimir',))
 ('prys', ('delyth',)) v. ('prys', ('gruffudd',))
-('reichel', ('uwe', 'd.')) v. ('reichel', ('uwe',))
 ('ribeiro', ('eugenio',)) v. ('ribeiro', ('ricardo',))
 ('rodrigues', ('blanca',)) v. ('rodrigues', ('joao',))
 ('rodrigues', ('filipe',)) v. ('rodrigues', ('blanca',))
 ('rodrigues', ('filipe',)) v. ('rodrigues', ('joao',))
 ('rodrigues', ('joao', 'antonio')) v. ('rodrigues', ('blanca',))
 ('rodrigues', ('joao', 'antonio')) v. ('rodrigues', ('filipe',))
-('rodrigues', ('joao', 'antonio')) v. ('rodrigues', ('joao',))
 ('rodriguez', ('eric',)) v. ('rodriguez', ('alejandro',))
 ('santos', ('diana',)) v. ('santos', ('ana', 'lucia'))
 ('santos', ('fabio',)) v. ('santos', ('ana', 'lucia'))
 ('santos', ('fabio',)) v. ('santos', ('diana',))
 ('schmidt', ('thomas',)) v. ('schmidt', ('maria',))
 ('schultz', ('robert', 't.')) v. ('schultz', ('tanja',))
-('sharma', ('dipti',)) v. ('sharma', ('dipti', 'misra'))
 ('sharma', ('himanshu',)) v. ('sharma', ('dipti',))
 ('sharma', ('himanshu',)) v. ('sharma', ('dipti', 'misra'))
 ('shrestha', ('prasha',)) v. ('shrestha', ('niraj',))
@@ -227,9 +222,14 @@ Most likely different authors:
 
 ================
 Most likely variants (same normalized family name):
+('clergerie', ('eric', 'villemonte', 'de', 'la')) v. ('clergerie', ('eric', 'de', 'la'))
 ('gaizauskas', ('r.',)) v. ('gaizauskas', ('robert',))
 ('losnegaard', ('gyri', 's.')) v. ('losnegaard', ('gyri', 'smordal'))
+('mccrae', ('john', 'philip')) v. ('mccrae', ('john',))
 ('montcheuil', ('gregoire',)) v. ('montcheuil', ('gregoire', 'de'))
+('reichel', ('uwe', 'd.')) v. ('reichel', ('uwe',))
+('rodrigues', ('joao', 'antonio')) v. ('rodrigues', ('joao',))
+('sharma', ('dipti',)) v. ('sharma', ('dipti', 'misra'))
 ('tree', ('jean', 'fox')) v. ('tree', ('jean', 'e.', 'fox'))
 ('zhang', ('xiaojun',)) v. ('zhang', ('jiajun',))
 
@@ -239,3 +239,4 @@ Most likely a variant of:
 
 ================
 Most likely  variants of each other:
+('mititelu', ('verginica', 'barbu')) v. ('mitetelu', ('verginica',)) (4 == 2)

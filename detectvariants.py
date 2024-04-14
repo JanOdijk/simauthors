@@ -16,6 +16,19 @@ initialscore = 0.1
 scorethreshold = (0.3, 0)
 
 
+
+def isnoncontsublist(wrds1: List[str], wrds2: List[str]) -> bool:
+    if wrds1 == []:
+        return True
+    if wrds2 == []:
+        return False
+    head1 = wrds1[0]
+    head2 = wrds2[0]
+    if head1 == head2:
+        result = isnoncontsublist(wrds1[1:], wrds2[1:])
+    else:
+        result = isnoncontsublist(wrds1, wrds2[1:])
+    return result
 def detectvariants():
 
     parser = OptionParser()
@@ -122,9 +135,16 @@ def detectvariants():
 def getrestnamescore(restname1: List[str], restname2: List[str]) -> float:
     newrestname1 = expandinitials(restname1, restname2)
     newrestname2 = expandinitials(restname2, restname1)
-    newrestname1str = space.join(newrestname1)
-    newrestname2str = space.join(newrestname2)
-    score = relativedistance(newrestname1str, newrestname2str)
+    if .5 * len(newrestname2) <= len(newrestname1) < len(newrestname2) and \
+        isnoncontsublist(newrestname1, newrestname2):
+        score = 0.1
+    elif .5 * len(newrestname1) <= len(newrestname2) < len(newrestname1) and \
+            isnoncontsublist(newrestname2, newrestname1):
+        score = 0.1
+    else:
+        newrestname1str = space.join(newrestname1)
+        newrestname2str = space.join(newrestname2)
+        score = relativedistance(newrestname1str, newrestname2str)
     return score
 
 
