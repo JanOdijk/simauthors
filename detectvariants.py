@@ -14,7 +14,9 @@ namevariantsfullname = 'name_analysis.txt'
 
 initialscore = 0.1
 scorethreshold = (0.3, 0)
-
+restscorethreshold = 0.3
+missingnames_score = 0.1
+missingnames_factor = 0.5
 
 
 def isnoncontsublist(wrds1: List[str], wrds2: List[str]) -> bool:
@@ -91,7 +93,7 @@ def detectvariants():
     print(f'\n{counter} comparisons made')
 
     # sort the results by score, lowest to highest
-    sortedresultlist = sorted(resultlist, key = lambda x: x[2], reverse=True)
+    sortedresultlist = sorted(resultlist, key=lambda x: x[2], reverse=True)
 
     differentauthors = []
     likelyvariants = []
@@ -101,11 +103,11 @@ def detectvariants():
         nametuple1, nametuple2, score = triple
         famscore, restscore = score
         if famscore == 0:
-            if restscore > .3:
+            if restscore > restscorethreshold:
                 differentauthors.append((nametuple1, nametuple2))
             else:
                 likelyvariants.append((nametuple1, nametuple2))
-        elif restscore <= .3:
+        elif restscore <= restscorethreshold:
             famname1frq = famnamefrqdict[nametuple1[0]]
             famname2frq = famnamefrqdict[nametuple2[0]]
             if famname1frq > famname2frq:
@@ -135,12 +137,12 @@ def detectvariants():
 def getrestnamescore(restname1: List[str], restname2: List[str]) -> float:
     newrestname1 = expandinitials(restname1, restname2)
     newrestname2 = expandinitials(restname2, restname1)
-    if .5 * len(newrestname2) <= len(newrestname1) < len(newrestname2) and \
+    if missingnames_factor* len(newrestname2) <= len(newrestname1) < len(newrestname2) and \
         isnoncontsublist(newrestname1, newrestname2):
-        score = 0.1
-    elif .5 * len(newrestname1) <= len(newrestname2) < len(newrestname1) and \
+        score = missingnames_score
+    elif missingnames_factor * len(newrestname1) <= len(newrestname2) < len(newrestname1) and \
             isnoncontsublist(newrestname2, newrestname1):
-        score = 0.1
+        score = missingnames_score
     else:
         newrestname1str = space.join(newrestname1)
         newrestname2str = space.join(newrestname2)

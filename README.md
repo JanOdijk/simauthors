@@ -33,7 +33,7 @@ If a block consists of multiple session slots, these session slots occur in para
 Each parallel block and each session slot  must have a unique identifier to be assigned by the program committee.
 Each submission must have a unique identifier.
 
-The programme committee must create an Excel workbook in which it defines the program, and this Excel workbook must contain a worksheet with at least the following columns:
+The programme committee must create an Excel workbook in which it defines the program, and this Excel workbook must contain a worksheet with all and only the accepted submissions and with at least the following columns:
 
 * *paperid*: unique id of the accepted submission
 * *sessionslotid*: unique id of the session slot in which the presentation will be held
@@ -47,7 +47,7 @@ Any number of other columns can be present in the file.
 
 Such a file can be created by export from the START conference management system by adding columns for *sessionslotid* and *parblock* (*paperid* and *authors* are present in such files.
 
-> Usually the parblock is uniquely determined by the session slot id. In the past we added parblocks automatically in the programme file by an Excel formula that looked up the parblock for a session slot in a table in a separate sheet. But it would be desirable to be able to specify such a mapping table in a separate file. That is currently not the case. 
+> Usually the parblock is uniquely determined by the session slot id. In the past we added parblocks automatically in the programme file by an Excel formula that looked up the parblock for a session slot in a table in a separate sheet. This is necessary anyway to generate different formats of the program after it has been established from this file. But it would nevertheless be desirable to be able to specify such a mapping table in a separate file. That is currently not the case. 
 
 ## Presenters
 
@@ -161,9 +161,53 @@ Name variants that cannot be dealt with by the procedure described above can be 
 
 The script *detectvariants.py* can be used to analyse the names in the conference programme file and entries for the exception file might be detected in this way.
 
-## *detectvariants* script
+## The script *detectvariants*
 
-@@to be added@@
+The *detectvariants* script analyses all names in the conference programme file. It compares each name to each other name, and categorizes the name pairs in a number of classes. We list these classes here and illustrate with examples from the LREC 2016 program file.
+
+* the normalized names differ significantly both for the family name and the rest of the name and are considered to be names of different persons. This is the majority and they are not reported in the output 
+* in the two names the normalized family names differ slightly: one name is most likely a variant of the other. The most frequent one is considered the correct one. Such examples should be added to the exception dictionary.
+  * ('bhattacharya', ('pushpak',)) v. ('bhattacharyya', ('pushpak',)) (2 v. 4)
+*  in the two names the normalized family names differ slightly: the two names are variants. They have the same frequency, so it is unclear which of these, if any,  is the correct one. Such examples should be added to the exception dictionary.
+  * ('mititelu', ('verginica', 'barbu')) v. ('mitetelu', ('verginica',)) (1 == 1)
+* in the two names the normalized family names are identical, but the rests of the names differ significantly. The two names most likely refer to different persons. This list must be checked thoruoghly to see whether n=i contains no variants of the same name.
+   *  ('zhang', ('yue',)) v. ('zhang', ('ziqi',))
+*  in the two names the normalized family names are identical, but the rests of the names differ slightly. the two names are most likely variants
+   * ('mccrae', ('john', 'philip')) v. ('mccrae', ('john',))
+
+The program writes the  output to a file called *name_analysis.txt*.
+
+The program mostly works with relative edit distance (Levenshtein distance) to compare names.
+
+> *Relative edit distance* is edit distance divided by the maximum of the lengths of the compared sequences.
+
+It has set thresholds to determine the difference between "differing significantly" v. "differing slightly".
+It is important to detect as many potential variants as possible. For example, with the current settings the program finds these as variants:
+* ('zhang', ('xiaojun',)) v. ('zhang', ('jiajun',))
+
+It is not certain that this is correct, but it is safer to treat them as variants of the same person than as two different persons.
+
+
+The program has special measures to deal with:
+* missing names in case of multiple non family names. Thus, these are considered  variants:
+  *  ('clergerie', ('eric', 'villemonte', 'de', 'la')) v. ('clergerie', ('eric', 'de', 'la')) 
+* abbreviated first names(initials) v. full first names also lead to variants (if not too different in other respects)
+   *   ('gaizauskas', ('r.',)) v. ('gaizauskas', ('robert',))
+
+
+##  Parameters of *detectvariants*
+
+The following parameters are used in the script:
+
+* initialscore = 0.1. the relative edit distance of an initial and a  full name starting with the initial's first character is set to this value.
+* scorethreshold = (0.3, 0): two names are considered names of different persons if the relative edit distance of the family names has a difference of at least the first value of this tuple and the relative edit distance of the rests of the names are at least the second value in this tuple.  
+* restscorethreshold = 0.3: the non-familynames are considered significantly different if the relative edit distance of the non-familynames is at least this value
+* missingnames_score = 0.1. if there are missing names, the script gives this value as relative edit distance .
+* missingnames_factor = 0.5. The number of missing name parts in a name must be less than this factor times the length of the name parts of the other name. 
+
+These values have been set experimentally. They may have to be adapted for other conference programs.
+
+> Note that the variants of the names we encountered here actually occur as different entries in the LREC 2016 proceedings if the papers were accepted, e.g.  (http://www.lrec-conf.org/proceedings/lrec2016/authors.html), for *Bhattacharyya* / *Bhattacharya*
 
 # Full parameter overview
 
@@ -173,7 +217,7 @@ The script *detectvariants.py* can be used to analyse the names in the conferenc
 
 As stated before, systematic use of author identifiers would avoid many of the problems that a programme commitee is currently faced with. There are several author identifiers systems that are independent of specific conferences, international open ones such as e.g. ORCID, commercial ones such as ResearcherID, and national ones such as DAI (in the Netherlands). The problems with such systems are
 
-* not very author has such an author ID
+* not every author has such an author ID
 * even if they have it they have to enter it and make no mistakes with it
 
 Perhaps a simpler and better solution is that the conference management system assigns author ids. This requires that *every* author is registered in the conference management system (not just the submitting author), but that should not be too difficult because almost every author is a submitting author in time. But it also requires checks when researchers register under different affiliations, e-mailaddresses and different  variants of their names. 
